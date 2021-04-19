@@ -333,7 +333,12 @@ export type ObjectHavingSome<Key extends string> = A.Clean<{
 /**
  * <needs description>
  */
-export type Path = Array<(number | string)>;
+export type Idx = string | number | symbol;
+
+/**
+ * <needs description>
+ */
+export type Path = Idx[];
 
 /**
  * <needs description>

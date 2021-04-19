@@ -47,6 +47,7 @@ import {
     Evolver,
     Filter,
     Functor,
+    Idx,
     KeyValuePair,
     Lens,
     Merge,
@@ -674,8 +675,8 @@ export function fromPairs<V>(pairs: Array<KeyValuePair<number, V>>): { [index: n
  * calling a String-returning function
  * on each element, and grouping the results according to values returned.
  */
-export function groupBy<T, K extends string = string>(fn: (a: T) => K, list: readonly T[]): Record<K, T[]>;
-export function groupBy<T, K extends string = string>(fn: (a: T) => K): (list: readonly T[]) => Record<K, T[]>;
+export function groupBy<T, K extends Idx = Idx>(fn: (a: T) => K, list: readonly T[]): Record<K, T[]>;
+export function groupBy<T, K extends Idx = Idx>(fn: (a: T) => K): (list: readonly T[]) => Record<K, T[]>;
 
 /**
  * Takes a list and returns a list of lists where each sublist's elements are all "equal" according to the provided equality function
@@ -719,8 +720,8 @@ export function hasIn(s: string): <T>(obj: T) => boolean;
 /**
  * Returns whether or not a path exists in an object. Only the object's own properties are checked.
  */
-export function hasPath<T>(list: readonly string[], obj: T): boolean;
-export function hasPath(list: readonly string[]): <T>(obj: T) => boolean;
+export function hasPath<T>(list: Readonly<Path>, obj: T): boolean;
+export function hasPath(list: Readonly<Path>): <T>(obj: T) => boolean;
 
 /**
  * Returns the first element in a list.
@@ -773,10 +774,10 @@ export function includes<T>(target: T): (list: readonly T[]) => boolean;
  * Given a function that generates a key, turns a list of objects into an object indexing the objects
  * by the given key.
  */
-export function indexBy<T, K extends string | number = string>(fn: (a: T) => K, list: readonly T[]): { [key in K]: T };
-export function indexBy<T, K extends string | number | undefined = string>(fn: (a: T) => K, list: readonly T[]): { [key in NonNullable<K>]?: T };
-export function indexBy<T, K extends string | number = string>(fn: (a: T) => K): (list: readonly T[]) => { [key in K]: T };
-export function indexBy<T, K extends string | number | undefined = string>(fn: (a: T) => K | undefined): (list: readonly T[]) => { [key in NonNullable<K>]?: T };
+export function indexBy<T, K extends Idx = Idx>(fn: (a: T) => K, list: readonly T[]): { [key in K]: T };
+export function indexBy<T, K extends Idx | undefined = Idx>(fn: (a: T) => K, list: readonly T[]): { [key in NonNullable<K>]?: T };
+export function indexBy<T, K extends Idx = Idx>(fn: (a: T) => K): (list: readonly T[]) => { [key in K]: T };
+export function indexBy<T, K extends Idx | undefined = Idx>(fn: (a: T) => K | undefined): (list: readonly T[]) => { [key in NonNullable<K>]?: T };
 
 /**
  * Returns the position of the first occurrence of an item in an array
@@ -1591,8 +1592,8 @@ export function project<T, U>(props: readonly string[]): (objs: readonly T[]) =>
  */
 export function prop<T>(__: Placeholder, obj: T): <P extends keyof T>(p: P) => T[P];
 export function prop<P extends keyof T, T>(p: P, obj: T): T[P];
-export function prop<P extends string>(p: P): <T>(obj: Record<P, T>) => T;
-export function prop<P extends string, T>(p: P): (obj: Record<P, T>) => T;
+export function prop<P extends Idx>(p: P): <T>(obj: Record<P, T>) => T;
+export function prop<P extends Idx, T>(p: P): (obj: Record<P, T>) => T;
 
 /**
  * Determines whether the given property of an object has a specific

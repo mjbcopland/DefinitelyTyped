@@ -3,8 +3,9 @@ import * as R from 'ramda';
 () => {
   const orValue = 11;
   const orValueStr = 'str';
-  const testPath = ['x', 0, 'y'];
-  const testObj = { x: [{ y: 2, z: 3 }, { y: 4, z: 5 }] };
+  const symbol = Symbol();
+  const testPath = ['x', 0, symbol];
+  const testObj = { x: [{ [symbol]: 2, z: 3 }, { [symbol]: 4, z: 5 }] };
   const testObjMiss = { c: { b: 2 } };
 
   R.pathOr<number>(orValue, testPath, testObj); // => 2
